@@ -72,14 +72,14 @@ public class ObjectStore<E extends Encodable> {
 	}
 	
 	/**
-	 * Returns the value of <code>delegate.preexisting()</code>.  .
+	 * Returns the value of <code>delegate.preexisting()</code>.
 	 *
 	 * @return Returns the value of <code>delegate.preexisting()</code>. 
 	 */	
 	public boolean preexisting() {return delegate.preexisting;}
 	
 	/**
-	 * Returns the value of <code>delegate.exists(String name)</code>.  .
+	 * Returns the value of <code>delegate.exists(String name)</code>.
 	 *
 	 * @param name The name of the object to test if it exists in this object store.
 	 * @return Returns the value of <code>delegate.exists(String name)</code>. 
@@ -141,6 +141,8 @@ public class ObjectStore<E extends Encodable> {
 	 * @param name The name of the object to get.
 	 * @return The object associated with the given name from this object store or null if there is no such object.
 	 * @throws IOException if there was a problem getting the object.
+	 * @throws NullPointerException if this object store was not initialized with a decode with associated 
+	 * type <code>E</code>.
 	 */	
 	public E get(String name) throws IOException {
 		return get(name, decoder);
@@ -153,7 +155,7 @@ public class ObjectStore<E extends Encodable> {
 	 * @return The object associated with the given path from this object store or null if there is no such object.
 	 * @throws IOException if there was a problem getting the object.
 	 * @throws NullPointerException if this object store was not initialized with a decode with associated 
-	 * type <code>E</code>
+	 * type <code>E</code>.
 	 */	
 	protected E get(Path path) throws IOException {
 		return get(path, decoder);
@@ -167,8 +169,6 @@ public class ObjectStore<E extends Encodable> {
 	 * @param decoder The decoder of the object to get.
 	 * @return Returns the object associated with the given name and given <code>Decoder</code> from this object store.
 	 * @throws IOException if there was a problem getting the object.
-	 * @throws NullPointerException if this object store was not initialized with a decode with associated 
-	 * type <code>E</code>
 	 */	
 	public <S> S get(String name, Decoder<S> decoder) throws IOException {
 		return get(delegate.dir.resolve(name), decoder);
@@ -182,8 +182,6 @@ public class ObjectStore<E extends Encodable> {
 	 * @param decoder The decoder of the object to get.
 	 * @return Returns the object associated with the given path and given <code>Decoder</code> from this object store.
 	 * @throws IOException if there was a problem getting the object.
-	 * @throws NullPointerException if this object store was not initialized with a decode with associated 
-	 * type <code>E</code>
 	 */	
 	protected <S> S get(Path path, Decoder<S> decoder) throws IOException {
 		if(!Files.exists(path)) return null;

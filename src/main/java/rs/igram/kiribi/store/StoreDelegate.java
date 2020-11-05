@@ -99,7 +99,7 @@ public class StoreDelegate {
 	public boolean preexisting() {return preexisting;}
 	
 	/**
-	 * Returns <code>true</code> if the name file relative to the associated directory exists, 
+	 * Returns <code>true</code> if the file with the given name relative to the associated directory exists, 
 	 * <code>false</code> otherwise.  
 	 *
 	 * @param name The name of the file to test for existence exists.

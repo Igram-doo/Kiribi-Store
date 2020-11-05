@@ -43,7 +43,7 @@ import rs.igram.kiribi.io.Encodable;
 import static rs.igram.kiribi.store.ListStore.Type.*;
 
 /**
- * An instance of this class manages persistent storage of a list of elements.
+ * An instance of this class manages persistent storage of a list of <code>Encodable</code> elements.
  *
  * @author Michael Sargent
  */
@@ -197,7 +197,7 @@ public class ListStore<E extends Encodable> extends ObjectStore<E> {
 	}
 	
 	/**
-	 * Subclasses can otherride this method to process changes to this list store.
+	 * Subclasses can override this method to process changes to this list store.
 	 *
 	 * @param type The type of change to this <code>ListStore</code>.
 	 * @param data The data which changed.
