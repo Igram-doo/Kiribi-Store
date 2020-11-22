@@ -1,2 +1,2 @@
-# Kiribi-Crypto
+# Kiribi-Store
 Kiribi NOSQL module
