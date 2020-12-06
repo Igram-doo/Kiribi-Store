@@ -47,6 +47,7 @@ import static rs.igram.kiribi.store.ListStore.Type.*;
  *
  * @author Michael Sargent
  */
+@Deprecated
 public class ListStore<E extends Encodable> extends ObjectStore<E> {
 	
 	/**

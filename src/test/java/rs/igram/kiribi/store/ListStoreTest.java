@@ -45,6 +45,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import rs.igram.kiribi.io.*;
 
+@Deprecated
 public class ListStoreTest {	
 	@TempDir Path root;
     Decoder<Bar> decoder = Bar::new;
