@@ -13,9 +13,6 @@ Lightweight NOSQL store for encodable objects.
 ##### Object Store
 Stores encodable objects.
 
-##### List Store
-Stores a list of encodable objects.
-
 ### Code Example
 
 	Path root = ...
@@ -36,12 +33,6 @@ Stores a list of encodable objects.
 ##### Exports
 * rs.igram.kiribi.store
 
-### Status
-* Experimental.
-
 ### To Do
 * Determine minimum supported Java version.
-* Finish unit tests.
 
-### Known Issues
-* Must call list() method on ListStore to load.
