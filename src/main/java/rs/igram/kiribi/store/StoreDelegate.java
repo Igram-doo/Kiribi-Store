@@ -39,7 +39,6 @@ import rs.igram.kiribi.io.VarInputStream;
  * @author Michael Sargent
  */
 public class StoreDelegate {
-	
 	/**
 	 * Flag indicating whether the directory associated with this <code>StoreDelegate</code>
 	 * existed prior to instatiation.

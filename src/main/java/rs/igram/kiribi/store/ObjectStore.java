@@ -24,6 +24,8 @@
  
 package rs.igram.kiribi.store;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,6 +42,7 @@ import static java.nio.file.StandardCopyOption.*;
  * @author Michael Sargent
  */
 public class ObjectStore<E extends Encodable> {
+	protected final Lock lock = new ReentrantLock();
 	
 	/**
 	 * The <code>StoreDelege</code> for this object store.
@@ -76,7 +79,14 @@ public class ObjectStore<E extends Encodable> {
 	 *
 	 * @return Returns the value of <code>delegate.preexisting()</code>. 
 	 */	
-	public boolean preexisting() {return delegate.preexisting;}
+	public boolean preexisting() {
+		lock.lock();
+		try{
+			return delegate.preexisting;
+		} finally {
+			lock.unlock();
+		}
+	}
 	
 	/**
 	 * Returns the value of <code>delegate.exists(String name)</code>.
@@ -85,7 +95,12 @@ public class ObjectStore<E extends Encodable> {
 	 * @return Returns the value of <code>delegate.exists(String name)</code>. 
 	 */	
 	public boolean exists(String name) {
-		return delegate.exists(name);
+		lock.lock();
+		try{
+			return delegate.exists(name);
+		} finally {
+			lock.unlock();
+		}
 	}
 		
 	/**
@@ -95,7 +110,12 @@ public class ObjectStore<E extends Encodable> {
 	 * @throws IOException if there was a problem removing .the object from this store.
 	 */	
 	public void remove(String name) throws IOException {
-		delegate.remove(name);
+		lock.lock();
+		try{
+			delegate.remove(name);
+		} finally {
+			lock.unlock();
+		}
 	}
 
 	/**
@@ -107,14 +127,17 @@ public class ObjectStore<E extends Encodable> {
 	 * @throws IOException if there was a problem putting the object in this object store.
 	 */	
 	public <E extends Encodable> void put(String name, E e) throws IOException {
-		Path path = delegate.dir.resolve(name);
+		lock.lock();
+		Path path = null;
 		Path bk = null;
 		boolean success = false;
-		if(Files.exists(path)){
-			bk = delegate.dir.resolve(name+".bk");
-			Files.move(path, bk, REPLACE_EXISTING, ATOMIC_MOVE);
-		}
 		try{
+			path = delegate.dir.resolve(name);
+			if(Files.exists(path)){
+				bk = delegate.dir.resolve(name+".bk");
+				Files.move(path, bk, REPLACE_EXISTING, ATOMIC_MOVE);
+			}
+		
 			delegate.out(e.encode(), path);
 			success = true;
 		}catch(IOException e2){
@@ -132,6 +155,7 @@ public class ObjectStore<E extends Encodable> {
 					Files.delete(bk);
 				}catch(IOException e1){}
 			}
+			lock.unlock();
 		}
 	}
 
@@ -145,7 +169,12 @@ public class ObjectStore<E extends Encodable> {
 	 * type <code>E</code>.
 	 */	
 	public E get(String name) throws IOException {
-		return get(name, decoder);
+		lock.lock();
+		try{
+			return get(name, decoder);
+		} finally {
+			lock.unlock();
+		}
 	}
 	
 	/**
@@ -171,7 +200,12 @@ public class ObjectStore<E extends Encodable> {
 	 * @throws IOException if there was a problem getting the object.
 	 */	
 	public <S> S get(String name, Decoder<S> decoder) throws IOException {
-		return get(delegate.dir.resolve(name), decoder);
+		lock.lock();
+		try{
+			return get(delegate.dir.resolve(name), decoder);
+		} finally {
+			lock.unlock();
+		}
 	}
 
 	/**
