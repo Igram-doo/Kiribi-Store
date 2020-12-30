@@ -33,6 +33,5 @@ Stores encodable objects.
 ##### Exports
 * rs.igram.kiribi.store
 
-### To Do
-* Determine minimum supported Java version.
+Java version 11
 
