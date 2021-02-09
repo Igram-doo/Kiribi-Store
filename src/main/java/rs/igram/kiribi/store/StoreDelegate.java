@@ -74,7 +74,7 @@ public class StoreDelegate {
 		this.root = root;
 		this.schema = schema;
 		
-		Path d = root;
+		var d = root;
 		for(String s : schema) d = root.resolve(s);
 		dir = d;
 		preexisting = Files.exists(dir);
@@ -129,7 +129,7 @@ public class StoreDelegate {
 	 * @throws IOException if there was a problem reading the file with the given path.
 	 */	
 	protected VarInputStream in(Path path) throws IOException {
-		byte[] b = Files.readAllBytes(path);
+		var b = Files.readAllBytes(path);
         return new VarInputStream(b);
     }
     
