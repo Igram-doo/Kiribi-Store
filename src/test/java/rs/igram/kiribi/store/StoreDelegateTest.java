@@ -52,7 +52,7 @@ public class StoreDelegateTest {
    public void testPreexisting() throws IOException {
    	   assertTrue(Files.isDirectory(root));
    	   
-   	   StoreDelegate delegate = new StoreDelegate(root, scheme);  	   
+   	   var delegate = new StoreDelegate(root, scheme);  	   
    	   assertFalse(delegate.preexisting());
    	   
    	   delegate = new StoreDelegate(root, scheme);
@@ -61,12 +61,12 @@ public class StoreDelegateTest {
 	
    @Test
    public void testExists() throws IOException {
-   	   StoreDelegate delegate = new StoreDelegate(root, scheme); 
-   	   String name = "b";
+   	   var delegate = new StoreDelegate(root, scheme); 
+   	   var name = "b";
    	   
    	   assertFalse(delegate.exists(name));
    	   
-   	   Path path = delegate.dir.resolve(name);
+   	   var path = delegate.dir.resolve(name);
    	   Files.createFile(path);
    	   
    	   assertTrue(delegate.exists(name));
@@ -74,12 +74,12 @@ public class StoreDelegateTest {
 	
    @Test
    public void testRemove() throws IOException {
-   	   StoreDelegate delegate = new StoreDelegate(root, scheme); 
-   	   String name = "c";
+   	   var delegate = new StoreDelegate(root, scheme); 
+   	   var name = "c";
    	   
    	   assertFalse(delegate.exists(name));
    	   
-   	   Path path = delegate.dir.resolve(name);
+   	   var path = delegate.dir.resolve(name);
    	   Files.createFile(path);
    	   
    	   assertTrue(delegate.exists(name));
@@ -89,17 +89,17 @@ public class StoreDelegateTest {
 	
    @Test
    public void testIO() throws IOException {
-   	   StoreDelegate delegate = new StoreDelegate(root, scheme); 
-   	   String name = "d";
-   	   Path path = delegate.dir.resolve(name);
+   	   var delegate = new StoreDelegate(root, scheme); 
+   	   var name = "d";
+   	   var path = delegate.dir.resolve(name);
    	   
-   	   byte[] b = new byte[100];
-   	   SecureRandom random = new SecureRandom();
+   	   var b = new byte[100];
+   	   var random = new SecureRandom();
    	   random.nextBytes(b);
    	   
    	   delegate.out(b, path);
-   	   VarInputStream in = delegate.in(path);
-   	   byte[] test = new byte[100];
+   	   var in = delegate.in(path);
+   	   var test = new byte[100];
    	   in.readFully(test);
    	   assertTrue(Arrays.equals(b, test));
    }

@@ -52,8 +52,8 @@ public class ObjectStoreTest {
    public void testPreexisting() throws IOException {
    	   assertTrue(Files.isDirectory(root));
    	   
-   	   StoreDelegate delegate = new StoreDelegate(root, scheme); 
-   	   ObjectStore store = new ObjectStore(delegate, null);  	   
+   	   var delegate = new StoreDelegate(root, scheme); 
+   	   var store = new ObjectStore(delegate, null);  	   
    	   assertFalse(delegate.preexisting());
    	   
    	   delegate = new StoreDelegate(root, scheme); 
@@ -63,13 +63,13 @@ public class ObjectStoreTest {
 	
    @Test
    public void testExists() throws IOException {
-   	   StoreDelegate delegate = new StoreDelegate(root, scheme); 
-   	   ObjectStore store = new ObjectStore(delegate, null); 
-   	   String name = "b";
+   	   var delegate = new StoreDelegate(root, scheme); 
+   	   var store = new ObjectStore(delegate, null); 
+   	   var name = "b";
    	   
    	   assertFalse(store.exists(name));
    	   
-   	   Path path = store.delegate.dir.resolve(name);
+   	   var path = store.delegate.dir.resolve(name);
    	   Files.createFile(path);
    	   
    	   assertTrue(store.exists(name));
@@ -77,13 +77,13 @@ public class ObjectStoreTest {
 	
    @Test
    public void testRemove() throws IOException {
-   	   StoreDelegate delegate = new StoreDelegate(root, scheme); 
-   	   ObjectStore store = new ObjectStore(delegate, null); 
-   	   String name = "c";
+   	   var delegate = new StoreDelegate(root, scheme); 
+   	   var store = new ObjectStore(delegate, null); 
+   	   var name = "c";
    	   
    	   assertFalse(store.exists(name));
    	   
-   	   Path path = store.delegate.dir.resolve(name);
+   	   var path = store.delegate.dir.resolve(name);
    	   Files.createFile(path);
    	   
    	   assertTrue(store.exists(name));
@@ -93,14 +93,14 @@ public class ObjectStoreTest {
 
    @Test
    public void testIO() throws IOException {
-   	   StoreDelegate delegate = new StoreDelegate(root, scheme); 
-   	   ObjectStore store = new ObjectStore(delegate, null); 
-   	   String name = "foo";
+   	   var delegate = new StoreDelegate(root, scheme); 
+   	   var store = new ObjectStore(delegate, null); 
+   	   var name = "foo";
    	   
-   	   Foo foo = new Foo();
+   	   var foo = new Foo();
    	   store.put(name, foo);
    	   // WTF??? shouldn'' need to cast
-   	   Foo test = (Foo)store.get(name, Foo::new);
+   	   var test = (Foo)store.get(name, Foo::new);
    	   
    	   assertEquals(foo, test);
    	   
